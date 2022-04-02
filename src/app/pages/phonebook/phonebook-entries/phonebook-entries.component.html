@@ -51,7 +51,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let entry of phonebookList.entries | filterlist: search; let i = index">
+          <tr
+            *ngFor="
+              let entry of phonebookList.entries | filterlist: search:'':phonebookList.entries.length;
+              let i = index
+            "
+          >
             <td>
               <input class="form-control" [(ngModel)]="entry.name" [disabled]="editing !== i" />
             </td>

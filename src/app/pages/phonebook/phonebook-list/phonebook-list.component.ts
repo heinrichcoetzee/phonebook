@@ -47,7 +47,5 @@ export class PhonebookListComponent implements OnInit {
     this.addingEntry = true;
     await this.dataService.createPhonebook();
     this.addingEntry = false;
-    this.search = 'adding';
-    this.search = '';
   }
 }
