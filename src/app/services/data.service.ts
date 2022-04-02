@@ -54,6 +54,16 @@ export class DataService {
     this.router.navigate(['phonebook', 'entry', entry.id]);
   }
 
+  removePhonebook(id: string): Promise<PhonebookList[]> {
+    return this.http
+      .delete<PhonebookList[]>(environment.api_url + '/phonebook/delete/' + id)
+      .toPromise()
+      .then((newList) => {
+        this.setPhoneBookList(newList);
+        return newList;
+      });
+  }
+
   async getPhonebookById(id: string): Promise<PhonebookList> {
     if (this.openedBook && this.openedBook.id === id) {
       return Promise.resolve(this.openedBook);
@@ -64,7 +74,7 @@ export class DataService {
 
   async savePhonebook(phonebookList: PhonebookList): Promise<PhonebookList> {
     return this.http
-      .post<PhonebookList>(environment.api_url + '/phonebook/update', { phonebookList })
+      .put<PhonebookList>(environment.api_url + '/phonebook/update', { phonebookList })
       .toPromise()
       .then((newPhonebook) => {
         const list = this.$phonebookList.getValue() || [];

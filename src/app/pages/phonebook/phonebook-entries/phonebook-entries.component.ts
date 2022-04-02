@@ -19,6 +19,7 @@ export class PhonebookEntriesComponent implements OnInit {
   faEdit = faEdit;
   editing: number | null = null;
   saving: boolean = false;
+  search: string = '';
   constructor(private router: Router, private dataService: DataService, private ar: ActivatedRoute) {}
 
   defaultEntry(): PhonebookEntry {

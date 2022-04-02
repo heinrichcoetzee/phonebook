@@ -7,9 +7,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { PhonebookEntriesComponent } from './phonebook-entries/phonebook-entries.component';
 import { PhonebookListComponent } from './phonebook-list/phonebook-list.component';
+import { FilterlistPipeModule } from '../../pipes/filterlist-pipe/filterlist-pipe.module';
 
 @NgModule({
   declarations: [PhonebookListComponent, PhonebookEntriesComponent],
-  imports: [CommonModule, PhonebookRoutingModule, FontAwesomeModule, FormsModule]
+  imports: [CommonModule, PhonebookRoutingModule, FontAwesomeModule, FormsModule, FilterlistPipeModule]
 })
 export class PhonebookModule {}

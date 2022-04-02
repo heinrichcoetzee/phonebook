@@ -24,11 +24,18 @@ phonebookRouter.post('/create', async (req: Request, res: Response) => {
   return res.send(newItem);
 });
 
-phonebookRouter.post('/update', async (req: Request, res: Response) => {
+phonebookRouter.put('/update', async (req: Request, res: Response) => {
   let { phonebookList } = req.body;
   let newItem = await dataAccess.updateListItem(phonebookList);
   res.statusCode = 200;
   return res.send(newItem);
+});
+
+phonebookRouter.delete('/delete/:id', async (req: Request, res: Response) => {
+  let { id } = req.params;
+  let list = await dataAccess.deleteListItem(id);
+  res.statusCode = 200;
+  return res.send(list);
 });
 
 phonebookRouter.get('/listitem/:id', async (req: Request, res: Response) => {

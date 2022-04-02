@@ -10,8 +10,20 @@
       </button>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="search-box">
+        <input [(ngModel)]="search" type="phonebookName" class="form-control" id="floatingInput" placeholder="Search" />
+      </div>
+    </div>
+  </div>
+
   <ng-container *ngIf="$phonebookList | async as PHONEBOOKLIST; else loading">
-    <div class="row mt-2" *ngFor="let phonebook of PHONEBOOKLIST; let i = index">
+    <div
+      class="row mt-2"
+      *ngFor="let phonebook of PHONEBOOKLIST | filterlist: search:'name':PHONEBOOKLIST.length; let i = index"
+    >
       <div class="col-12">
         <div class="card card-default">
           <div class="d-flex mb-4 mt-4">
@@ -19,7 +31,7 @@
               <input
                 type="phonebookName"
                 class="form-control"
-                id="floatingInput"
+                id="phonebookName"
                 [(ngModel)]="phonebook.name"
                 placeholder="Enter Phonebook name"
                 (ngModelChange)="delayedSave(phonebook, i)"
@@ -33,8 +45,13 @@
               <span class="badge bg-primary">{{ phonebook.entries ? phonebook.entries.length : 0 }}</span>
             </div>
             <div class="pb-edit-icon">
-              <button class="btn btn-default" (click)="edit(phonebook, i)">
+              <button class="btn btn-default p-0" (click)="editPhonebook(phonebook, i)">
                 <fa-icon [icon]="faEdit" class="pointer"></fa-icon>
+              </button>
+            </div>
+            <div class="pb-edit-icon">
+              <button class="btn btn-default p-0" (click)="removePhonebook(phonebook)">
+                <fa-icon [icon]="faTrash" class="pointer"></fa-icon>
               </button>
             </div>
           </div>
@@ -42,14 +59,14 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="PHONEBOOKLIST.length === 0">
+    <div class="row mt-4" *ngIf="PHONEBOOKLIST.length === 0">
       <div class="col-12 text-center">Add a new phonebook to start</div>
     </div>
   </ng-container>
 </div>
 
 <ng-template #loading>
-  <div class="w-100 text-center">
+  <div class="w-100 text-center mt-4">
     <fa-icon [icon]="faSpinner" size="2x" [spin]="true"></fa-icon>
   </div>
 </ng-template>

@@ -15,18 +15,33 @@
       </div>
     </div>
 
-    <div class="form-floating mb-3">
-      <input
-        [(ngModel)]="phonebookList.name"
-        type="phonebookName"
-        class="form-control"
-        id="floatingInput"
-        placeholder="Enter Phonebook name"
-      />
-      <label for="phonebookName">Phonebook Name</label>
+    <div class="row mt-4">
+      <div class="col-12 col-sm-6">
+        <div class="mb-3">
+          <label class="form-label" for="phonebookName">Phonebook Name</label>
+          <input
+            [(ngModel)]="phonebookList.name"
+            type="phonebookName"
+            class="form-control"
+            id="phonebookName"
+            placeholder="Enter Phonebook name"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <div class="search-box">
+          <label class="form-label" for="search-text"><br /></label>
+          <input [(ngModel)]="search" type="search-text" class="form-control" id="floatingInput" placeholder="Search" />
+        </div>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-12"></div>
+    </div>
+
     <fieldset [disabled]="saving">
-      <table class="table">
+      <table class="table mt-4">
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -36,7 +51,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let entry of phonebookList.entries; let i = index">
+          <tr *ngFor="let entry of phonebookList.entries | filterlist: search; let i = index">
             <td>
               <input class="form-control" [(ngModel)]="entry.name" [disabled]="editing !== i" />
             </td>
