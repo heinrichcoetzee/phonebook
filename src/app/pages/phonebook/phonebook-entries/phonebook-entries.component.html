@@ -1,0 +1,98 @@
+<div class="container-fluid">
+  <ng-container *ngIf="phonebookList; else loading">
+    <div class="row mb-4">
+      <div class="col-6">
+        <button class="btn btn-secondary" (click)="back()" [disabled]="saving">
+          <fa-icon class="me-2" [icon]="faChevronLeft"></fa-icon>
+          Back
+        </button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-primary float-end" (click)="save()" [disabled]="saving">
+          <fa-icon class="me-2" [icon]="saving ? faSpinner : faSave" [spin]="saving"></fa-icon>
+          Save
+        </button>
+      </div>
+    </div>
+
+    <div class="form-floating mb-3">
+      <input
+        [(ngModel)]="phonebookList.name"
+        type="phonebookName"
+        class="form-control"
+        id="floatingInput"
+        placeholder="Enter Phonebook name"
+      />
+      <label for="phonebookName">Phonebook Name</label>
+    </div>
+    <fieldset [disabled]="saving">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of phonebookList.entries; let i = index">
+            <td>
+              <input class="form-control" [(ngModel)]="entry.name" [disabled]="editing !== i" />
+            </td>
+            <td>
+              <input class="form-control" [(ngModel)]="entry.phoneNumber" [disabled]="editing !== i" />
+            </td>
+            <td>
+              <input class="form-control" [(ngModel)]="entry.email" [disabled]="editing !== i" />
+            </td>
+            <td>
+              <button
+                *ngIf="editing === i"
+                class="btn btn-default"
+                (click)="saveEntry()"
+                [disabled]="!entry?.name && !entry?.phoneNumber"
+              >
+                <fa-icon [icon]="faSave"></fa-icon>
+              </button>
+              <button
+                *ngIf="editing !== i"
+                class="btn btn-default"
+                (click)="editEntry(i)"
+                [disabled]="!entry?.name && !entry?.phoneNumber"
+              >
+                <fa-icon [icon]="faEdit"></fa-icon>
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input class="form-control" [(ngModel)]="newEntry.name" placeholder="Enter Contact Name" />
+            </td>
+            <td>
+              <input class="form-control" [(ngModel)]="newEntry.phoneNumber" placeholder="Enter Contact Number" />
+            </td>
+            <td>
+              <input class="form-control" [(ngModel)]="newEntry.email" placeholder="Enter Contact Email" />
+            </td>
+            <td>
+              <button
+                class="btn btn-default"
+                (click)="addEntry(newEntry)"
+                [disabled]="!newEntry.name && !newEntry.phoneNumber"
+              >
+                <fa-icon [icon]="faPlus"></fa-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </fieldset>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="w-100 text-center">
+    <fa-icon [icon]="faSpinner" size="2x" [spin]="true"></fa-icon>
+  </div>
+</ng-template>

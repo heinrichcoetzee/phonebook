@@ -1,0 +1,55 @@
+<div class="container-fluid">
+  <div class="row mb-4">
+    <div class="col-12 col-sm-8">
+      <h2>Phonebook management</h2>
+    </div>
+    <div class="col-12 col-sm-4">
+      <button class="btn btn-primary float-end" (click)="addPhonebook()" [disabled]="addingEntry">
+        <fa-icon class="me-2" [spin]="addingEntry" [icon]="addingEntry ? faSpinner : faPlusSquare"></fa-icon>
+        New Phonebook
+      </button>
+    </div>
+  </div>
+  <ng-container *ngIf="$phonebookList | async as PHONEBOOKLIST; else loading">
+    <div class="row mt-2" *ngFor="let phonebook of PHONEBOOKLIST; let i = index">
+      <div class="col-12">
+        <div class="card card-default">
+          <div class="d-flex mb-4 mt-4">
+            <div class="flex-fill ps-4 position-relative">
+              <input
+                type="phonebookName"
+                class="form-control"
+                id="floatingInput"
+                [(ngModel)]="phonebook.name"
+                placeholder="Enter Phonebook name"
+                (ngModelChange)="delayedSave(phonebook, i)"
+                [disabled]="savingItem[i]"
+              />
+              <div class="saving-phonebook-spinner" *ngIf="savingItem[i]">
+                <fa-icon [icon]="faSpinner" [spin]="true"></fa-icon>
+              </div>
+            </div>
+            <div class="pb-badge">
+              <span class="badge bg-primary">{{ phonebook.entries ? phonebook.entries.length : 0 }}</span>
+            </div>
+            <div class="pb-edit-icon">
+              <button class="btn btn-default" (click)="edit(phonebook, i)">
+                <fa-icon [icon]="faEdit" class="pointer"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="PHONEBOOKLIST.length === 0">
+      <div class="col-12 text-center">Add a new phonebook to start</div>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="w-100 text-center">
+    <fa-icon [icon]="faSpinner" size="2x" [spin]="true"></fa-icon>
+  </div>
+</ng-template>
