@@ -1,3 +1,31 @@
 thead th{
   text-align: center;
+  color:var(--color-tertiary);
+  border-bottom:2px solid var(--color-tertiary)!important;
+}
+
+.entry-rows{
+  >div{
+    margin-bottom: .7rem;
+  }
+}
+.entry-row-header{
+  color: var(--color-secondary);
+  margin-top: 2rem;
+  >div{
+    border-bottom: 2px solid var(--color-secondary);
+    padding-bottom: .8rem;
+    text-align: center;
+  }
+
+  margin: 1rem 0;
+}
+@media (max-width:792px){
+  .entry-rows {
+    > div{
+      padding-top: .5rem;
+    }
+
+  }
+
 }

@@ -42,16 +42,16 @@
               </div>
             </div>
             <div class="pb-badge">
-              <span class="badge bg-primary">{{ phonebook.entries ? phonebook.entries.length : 0 }}</span>
+              <span class="badge bg-secondary">{{ phonebook.entries ? phonebook.entries.length : 0 }}</span>
             </div>
             <div class="pb-edit-icon">
               <button class="btn btn-default p-0" (click)="editPhonebook(phonebook, i)">
-                <fa-icon [icon]="faEdit" class="pointer"></fa-icon>
+                <fa-icon [icon]="faEdit" class="text-primary"></fa-icon>
               </button>
             </div>
             <div class="pb-edit-icon">
               <button class="btn btn-default p-0" (click)="removePhonebook(phonebook)">
-                <fa-icon [icon]="faTrash" class="pointer"></fa-icon>
+                <fa-icon [icon]="faTrash" class="text-danger"></fa-icon>
               </button>
             </div>
           </div>

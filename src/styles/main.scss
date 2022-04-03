@@ -1,5 +1,5 @@
-@import "~bootstrap/scss/bootstrap";
 
+@import "~bootstrap/scss/bootstrap";
 @import './variables.scss';
 
 
@@ -23,5 +23,38 @@ body {
     border: none;
     border-bottom: 1px solid var(--color-dark);
 
+  }
+}
+
+
+.btn{
+  border-radius: 20px;
+  &.btn-primary{
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  &.btn-secondary{
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+  }
+}
+
+.bg-primary{
+  background-color: var(--color-primary);
+}
+.text-primary{
+  color: var(--color-primary);
+}
+.text-danger{
+  color: var(--color-danger);
+}
+.bg-secondary{
+  background-color: var(--color-secondary)!important;
+}
+
+
+@media (max-width:792px){
+  .hide-on-mobile{
+    display: none;
   }
 }

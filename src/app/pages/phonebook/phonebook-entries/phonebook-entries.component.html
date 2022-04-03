@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" (keyup.enter)="addEntry(newEntry)">
   <ng-container *ngIf="phonebookList; else loading">
     <div class="row mb-4">
       <div class="col-6">
@@ -36,44 +36,37 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-12"></div>
-    </div>
-
     <fieldset [disabled]="saving">
-      <table class="table mt-4">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Email</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            *ngFor="
-              let entry of phonebookList.entries | filterlist: search:'':phonebookList.entries.length;
-              let i = index
-            "
-          >
-            <td>
-              <input class="form-control" [(ngModel)]="entry.name" [disabled]="editing !== i" />
-            </td>
-            <td>
-              <input class="form-control" [(ngModel)]="entry.phoneNumber" [disabled]="editing !== i" />
-            </td>
-            <td>
-              <input class="form-control" [(ngModel)]="entry.email" [disabled]="editing !== i" />
-            </td>
-            <td>
+      <div class="row entry-row-header hide-on-mobile">
+        <div class="col-12 col-sm-3">Name</div>
+        <div class="col-12 col-sm-3">Phone Number</div>
+        <div class="col-12 col-sm-3">Email</div>
+        <div class="col-12 col-sm-3"></div>
+      </div>
+
+      <div
+        class="row entry-rows"
+        *ngFor="let entry of phonebookList.entries | filterlist: search:'':phonebookList.entries.length; let i = index"
+      >
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="entry.name" [disabled]="editing !== i" />
+        </div>
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="entry.phoneNumber" [disabled]="editing !== i" />
+        </div>
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="entry.email" [disabled]="editing !== i" />
+        </div>
+        <div class="col-12 col-sm-3 text-center">
+          <div class="d-flex justify-content-center text-center">
+            <div>
               <button
                 *ngIf="editing === i"
                 class="btn btn-default"
                 (click)="saveEntry()"
                 [disabled]="!entry?.name && !entry?.phoneNumber"
               >
-                <fa-icon [icon]="faSave"></fa-icon>
+                <fa-icon class="text-primary" [icon]="faSave"></fa-icon>
               </button>
               <button
                 *ngIf="editing !== i"
@@ -81,32 +74,43 @@
                 (click)="editEntry(i)"
                 [disabled]="!entry?.name && !entry?.phoneNumber"
               >
-                <fa-icon [icon]="faEdit"></fa-icon>
+                <fa-icon class="text-primary" [icon]="faEdit"></fa-icon>
               </button>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <input class="form-control" [(ngModel)]="newEntry.name" placeholder="Enter Contact Name" />
-            </td>
-            <td>
-              <input class="form-control" [(ngModel)]="newEntry.phoneNumber" placeholder="Enter Contact Number" />
-            </td>
-            <td>
-              <input class="form-control" [(ngModel)]="newEntry.email" placeholder="Enter Contact Email" />
-            </td>
-            <td>
+            </div>
+            <div>
               <button
+                *ngIf="editing === i"
                 class="btn btn-default"
-                (click)="addEntry(newEntry)"
-                [disabled]="!newEntry.name && !newEntry.phoneNumber"
+                (click)="deleteEntry(i)"
+                [disabled]="!entry?.name && !entry?.phoneNumber"
               >
-                <fa-icon [icon]="faPlus"></fa-icon>
+                <fa-icon [icon]="faTrash" class="text-danger"></fa-icon>
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row entry-rows">
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="newEntry.name" placeholder="Enter Contact Name" />
+        </div>
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="newEntry.phoneNumber" placeholder="Enter Contact Number" />
+        </div>
+        <div class="col-12 col-sm-3">
+          <input class="form-control" [(ngModel)]="newEntry.email" placeholder="Enter Contact Email" />
+        </div>
+        <div class="col-12 col-sm-3 text-center">
+          <button
+            class="btn btn-default"
+            (click)="addEntry(newEntry)"
+            [disabled]="!newEntry.name && !newEntry.phoneNumber"
+          >
+            <fa-icon [icon]="faPlus"></fa-icon>
+          </button>
+        </div>
+      </div>
     </fieldset>
   </ng-container>
 </div>

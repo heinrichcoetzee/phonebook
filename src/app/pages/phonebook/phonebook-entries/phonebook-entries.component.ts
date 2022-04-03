@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { faChevronLeft, faEdit, faPlus, faSave, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faEdit, faPlus, faSave, faSpinner, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { PhonebookEntry, PhonebookList } from '../../../../../backend/interfaces/phonebook.interface';
 import { DataService } from '../../../services/data.service';
 
@@ -17,6 +17,7 @@ export class PhonebookEntriesComponent implements OnInit {
   newEntry = this.defaultEntry();
   faPlus = faPlus;
   faEdit = faEdit;
+  faTrash = faTrash;
   editing: number | null = null;
   saving: boolean = false;
   search: string = '';
@@ -46,6 +47,10 @@ export class PhonebookEntriesComponent implements OnInit {
     this.phonebookList = await this.dataService.savePhonebook(this.phonebookList as PhonebookList);
     this.saving = false;
   }
+
+  deleteEntry(index: number) {
+    this.phonebookList?.entries.splice(index, 1);
+  }
   editEntry(index: number) {
     this.editing = index;
   }
@@ -53,6 +58,10 @@ export class PhonebookEntriesComponent implements OnInit {
     this.editing = null;
   }
   addEntry(entry: PhonebookEntry) {
+    if (!entry.name || !entry.phoneNumber) {
+      return;
+    }
+
     this.editing = null;
     this.phonebookList?.entries.push(entry);
     this.newEntry = this.defaultEntry();
